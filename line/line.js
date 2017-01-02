@@ -4,7 +4,6 @@ $(document).ready(function(){
         title: "Titulo",
         subtitle: "Subtitulo"
     }
-
     var visualization = d3plus.viz()
         .container("#viz")
         .data(data)
@@ -34,6 +33,16 @@ $(document).ready(function(){
         .title({
             "sub": params.subtitle
         })
+
+        // Codigo editado
+        .tooltip({
+            "value": [ "name", "value", "type"], //O "type" só é exibido se não estiver com "balança comercial" selecionado no grafico"
+            "children": false
+        })
+
+        // link para documentacao: https://github.com/alexandersimoes/d3plus/wiki/Visualizations#tooltip
+
+
         .ui([
                 {
                     "label": "Escala",
