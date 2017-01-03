@@ -71,7 +71,7 @@ $(document).ready(function(){
         })
         .tooltip({
              "value": [ "name", "type"], //O "type" só é exibido se não estiver com "balança comercial" selecionado no grafico"
-             "children": false
+             "children": true
          })
         .ui([
                 {
@@ -99,7 +99,7 @@ $(document).ready(function(){
                         if(value == "both"){
                             viz.id({
                                 "value": ["port", "type"],
-                                "solo" : []
+                                "solo" : [],
                             })
                             .depth(0)
                             .draw();
