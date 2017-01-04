@@ -69,10 +69,43 @@ $(document).ready(function(){
         .title({
             "sub": params.subtitle
         })
+
         .tooltip({
-             "value": [ "name", "type"], //O "type" só é exibido se não estiver com "balança comercial" selecionado no grafico"
-             "children": true
+             "value": {
+                 "Importação" : function (obj) {
+                     // console.log(obj.type);
+                     if (obj.type[1].type === "import" )
+                         return obj.type[1].value;
+                     else 
+                         return null;
+                 },
+                 "Exportação" : function (obj) {
+                     if (obj.type[0].type === "export" )
+                        return obj.type[0].value;
+                     else 
+                       return null;
+                    }
+                },
+             "children": 0,
+             "html": function () {
+                 console.log("html");
+             },
+             "extent" : false
          })
+
+        .format({
+            "number": function(number, params) {
+                    
+                var formatted = d3plus.number.format(number, params);
+                if (params.key === "value") {
+                    return "$" + formatted + " USD";
+                }
+                else {
+                    return formatted;
+                }
+            }
+        })
+        
         .ui([
                 {
                     "label": "Escala",
@@ -99,7 +132,7 @@ $(document).ready(function(){
                         if(value == "both"){
                             viz.id({
                                 "value": ["port", "type"],
-                                "solo" : [],
+                                "solo" : []
                             })
                             .depth(0)
                             .draw();
