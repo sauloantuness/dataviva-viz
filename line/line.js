@@ -34,15 +34,6 @@ $(document).ready(function(){
             "sub": params.subtitle
         })
 
-        // Codigo editado
-        .tooltip({
-            "value": [ "name", "value", "type"], //O "type" só é exibido se não estiver com "balança comercial" selecionado no grafico"
-            "children": false
-        })
-
-        // link para documentacao: https://github.com/alexandersimoes/d3plus/wiki/Visualizations#tooltip
-
-
         .ui([
                 {
                     "label": "Escala",
@@ -88,6 +79,30 @@ $(document).ready(function(){
         .time({
             "value": "year"
         })
+
+        .tooltip({
+            "value": {
+                "importação" : function (obj) {
+                    // console.log(obj.type);
+                    if (obj.type[1].type === "import" )
+                        return obj.type[1].value;
+                    else 
+                        return null;
+                },
+                "Exportação" : function (obj) {
+                    if (obj.type[0].type === "export" )
+                        return obj.type[0].value;
+                    else 
+                        return null;
+                }
+            },
+            "children": 0,
+            "html": function () {
+                console.log("html");
+            },
+            "extent" : false
+        })
+
 
         .draw()
 });
