@@ -5,7 +5,7 @@
     .color("gender")
     .size("employee_count")
     .type("radar")
-    .time({"value": "year", "solo": 2009})
+    .time({"value": "year", "solo": 2010})
 
 
     .ui([{
@@ -14,7 +14,6 @@
                     "value" : [
                         {"Todos": "all"},
                         {"Comercio": "comercio"},
-                        {"Administração Pública": "administracao_publica"},
                         {"Indústrias de Transformação": "industrias_de_transformacao"},
                         {"Atividades Administrativas": "atividades_administrativas"},
                         {"Construção": "construcao"},
@@ -54,21 +53,25 @@
                             })
                             .draw();
                         }
-                        else if(value == "administracao_publica"){
-                           viz.data(sample_data_administracao_publica)
-                           .time({"value": "year", "solo": 2010})
-                           .color("gender")
-                           .id({
+                        else if(value == "industrias_de_transformacao"){
+                            viz.data(sample_data_industrias_de_transformacao)
+                            .time({"value": "year", "solo": 2010})
+                            .color("gender")
+                            .id({
                                 "value": ["gender", "cbo"],
                                 "solo" : []
                             })
                             .draw();
                         }
-                        else if(value == "industrias_de_transformacao"){
-                            
-                        }
                         else if(value == "atividades_administrativas"){
-                            
+                            viz.data(sample_data_atividades_administrativas)
+                            .time({"value": "year", "solo": 2010})
+                            .color("gender")
+                            .id({
+                                "value": ["gender", "cbo"],
+                                "solo" : []
+                            })
+                            .draw();
                         }
                         else if(value == "construcao"){
                             
