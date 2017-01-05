@@ -2,13 +2,20 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<script type= "text/javascript" src="https://code.highcharts.com/highcharts.js"></script>
-	<script type= "text/javascript" src="https://code.highcharts.com/highcharts-more.js"></script>
-	<script type= "text/javascript" src="https://code.highcharts.com/modules/exporting.js"></script>
+	<!-- <script type= "text/javascript" src="https://code.highcharts.com/highcharts.js"></script> -->
+    <script type= "text/javascript" src="http://code.highcharts.com/stock/highstock.js"></script>
+    <script type= "text/javascript" src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script type= "text/javascript" src="https://code.highcharts.com/modules/exporting.js"></script>
 	<title></title>
 </head>
 <body>
 	<div id="container" style="min-width: 400px; max-width: 750px; height: 1050px; margin: 0 auto"></div>
+    <script type= "text/javascript" src="data.js"></script>
 	<script type= "text/javascript" src="line.js"></script>
+
+    <input type="radio" name="mychart" class="mychart" id= "year" value="All" onclick= "select_by_year()" checked>All
+    <input type="radio" name="mychart" class="mychart" id= "year" value="2009" onclick= "select_by_year()">2009
+    <input type="radio" name="mychart" class="mychart" id= "year" value="2010" onclick= "select_by_year()">2010
+    <input type="radio" name="mychart" class="mychart" id= "year" value="2011" onclick= "select_by_year()">2011
 </body>
 </html>
