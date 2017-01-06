@@ -2,8 +2,8 @@ var data = [];
 
 $(document).ready(function(){
     ajaxQueue([
-        "http://localhost:5000/secex/year/port?type=export&product=1201",
-        "http://localhost:5000/metadata/ports"
+        "http://api.staging.dataviva.info/secex/year/port?type=export&product=1201",
+        "http://api.staging.dataviva.info/metadata/ports"
     ], 
 
     function(responses){

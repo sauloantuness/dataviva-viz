@@ -2,8 +2,8 @@ var data = [];
 
 $(document).ready(function(){
     ajaxQueue([
-        "http://localhost:5000/rais/year/gender/cnae_section",
-        "http://localhost:5000/metadata/cnae_sections"
+        "http://api.staging.dataviva.info/rais/year/gender/cnae_section",
+        "http://api.staging.dataviva.info/metadata/cnae_sections"
     ], 
 
     function(responses){
