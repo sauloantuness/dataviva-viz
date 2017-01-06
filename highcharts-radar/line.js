@@ -14,11 +14,11 @@ var select_by_year = function(){
         return item.year == year;
     })
 
-    var male_data = sample_data.filter(function(item){
+    var male_data = filtered_data_by_year.filter(function(item){
         return item.gender == 'Male';
     })
 
-    var female_data = sample_data.filter(function(item){
+    var female_data = filtered_data_by_year.filter(function(item){
         return item.gender == 'Female';
     })
 
