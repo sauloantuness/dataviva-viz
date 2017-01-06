@@ -6,6 +6,27 @@
 	<script type="text/javascript" src="../scripts/d3plus.js"></script>
 	<script type="text/javascript" src="../scripts/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" src="../scripts/async.js"></script>
+	<style type="text/css">
+		.d3plus_radial > path[fill="#282F6B"],
+		.d3plus_radial > path[fill="#b22200"] {
+			stroke: none !important
+		}
+		.d3plus_radial > path[fill="#282F6B"] {
+			fill: rgba(40,47,107,.5) !important;
+		}
+		.d3plus_radial > path[fill="#b22200"] {
+			fill: rgba(178,34,0,.5) !important;
+		}
+		.d3plus_radial > path[fill="#282F6B"]:hover {
+			fill: rgba(40,47,107,1) !important;
+		}
+		.d3plus_radial > path[fill="#b22200"]:hover {
+			fill: rgba(178,34,0,1) !important;
+		}
+		.d3plus_radar_labels {
+			font-size: 11px;
+		}
+	</style>
 </head>
 <body>
 	<div id="viz">
