@@ -7,8 +7,7 @@ $(document).ready(function(){
     ], 
 
     function(responses){
-
-        responses[0].data.forEach(function(item , index){
+        responses[1].data.forEach(function(item , index){
             data.push({
                 "year": item[0],
                 "gender": item[1] == "1" ? "Male" : "Female",
@@ -19,7 +18,7 @@ $(document).ready(function(){
         });
 
         data.map(function(item){
-            item.name = responses[1].cnae_sections[item.cnae_section].name_pt;
+            item.name = responses[0].cnae_sections[item.cnae_section].name_pt;
         });
 
         var visualization = d3plus.viz()
