@@ -1,4 +1,24 @@
+var data = [];
+
 $(document).ready(function(){
+    ajaxQueue([
+        "http://localhost:5000/secex/year/port?type=import&product=1201",
+        "http://localhost:5000/metadata/ports"
+    ], 
+
+    function(responses){
+        responses[1].data.forEach(function(item , index){
+            data.push({
+                "year": item[0],
+                "port": item[1],
+                "value": item[2],
+                "kg": item[3]
+            });
+        });
+
+        data.map(function(item){
+            item.name = responses[0].ports[item.port];
+        });
 
     var params = {
         title: "Titulo",
@@ -18,7 +38,7 @@ $(document).ready(function(){
         .y({
             "value": "value",
             "label": {
-                "value": "Eixo Y",
+                "value": "Valor da " + params.type + " [$ USD]",
                 "font": {
                     "size": 20
                 }
@@ -92,6 +112,5 @@ $(document).ready(function(){
             "value": "year"
         })
         .draw()
-
-
+    })
 });

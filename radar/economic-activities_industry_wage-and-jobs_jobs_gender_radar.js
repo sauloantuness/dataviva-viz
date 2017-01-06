@@ -30,7 +30,7 @@ $(document).ready(function(){
                 "value": "gender",
                 "tooltip": "name"
             })
-            .size("average_monthly_wage")
+            .size("jobs")
             .time({
                 "value": "year",
                 "solo": []
