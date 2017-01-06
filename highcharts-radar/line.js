@@ -8,7 +8,7 @@ var categories = ['Comércio', 'Administração Pública', 'Indústrias de Trans
 
 var select_by_year = function(){
 
-    var year = document.getElementById("year").checked
+    var year = document.querySelector('input[name="mychart"]:checked').value;
 
     var filtered_data_by_year = sample_data.filter(function(item){
         return item.year == year;
