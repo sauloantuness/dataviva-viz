@@ -1,11 +1,11 @@
 var ajaxQueue = function(urls, callback, ajax) {
-    var results = [],
-        queue = urls,
+    var results = urls.slice(),
+        queue = urls.slice(),
         config = ajax || {};
 
     var ready = function(result, url) {
         queue.splice(queue.indexOf(url), 1);
-        if (result) results.push(result);
+        if (result) results.splice(results.indexOf(url), 1, result);
         if (queue.length === 0 ) {
             callback(results);
         }
@@ -21,3 +21,4 @@ var ajaxQueue = function(urls, callback, ajax) {
         });
     });
 }
+
