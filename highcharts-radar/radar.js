@@ -1,41 +1,20 @@
-var sections = [
-    "Não definido",
-    "Agropecuária",
-    "Indústrias Extrativas",
-    "Indústrias de Transformação",
-    "Eletricidade e Gás",
-    "Saneamento Básico",
-    "Construção",
-    "Comércio",
-    "Transporte e correio",
-    "Alojamento e Alimentação",
-    "Informação e Comunicação",
-    "Atividades Financeiras",
-    "Atividades Imobiliárias",
-    "Serviços Especializados",
-    "Atividades Administrativas",
-    "Administração Pública",
-    "Educação",
-    "Saúde e serviços sociais",
-    "Artes, Cultura e Recreação",
-    "Outros Serviços",
-    "Serviços Domésticos",
-    "Organismos Internacionais",
-    "Não Declarado"
-];
-
+var sections = [];
+var years = new Set();
 var data = [];
 var title = 'Economic Activity per Gender';
 var chart;
 
 $(document).ready(function(){
     ajaxQueue([
-        "http://localhost:5000/rais/year/gender/cnae_section",
-        "http://localhost:5000/metadata/cnae_sections"
+        "http://api.staging.dataviva.info/rais/year/gender/cnae_section",
+        "http://api.staging.dataviva.info/metadata/cnae_sections"
     ], 
 
     function(responses){
-        responses[1].data.forEach(function(item, index){
+        var metadados = responses[0];
+        var api = responses[1];
+
+        api.data.forEach(function(item, index){
             data.push({
                 "year": item[0],
                 "gender": item[1] == "1" ? "Male" : "Female",
@@ -46,17 +25,35 @@ $(document).ready(function(){
         });
 
         data.map(function(item){
-            item.name = responses[0].cnae_sections[item.cnae_section].name_pt;
+            item.name = metadados[item.cnae_section].name_pt;
         });
 
+        
+        for(var k in metadados){
+            sections.push(metadados[k].name_pt);
+        }
 
-        load_viz()
+        data.forEach(function(item, index){
+            years.add(item.year);
+        });
+
+        createYearsButtons();
+        load_viz();
     })
 });
 
+var createYearsButtons = function(){
+    years = Array.from(years);
+    years.sort();
+    years.forEach(function(year, index){
+        var inputButton = '<input type="radio" name="year" value="' + year + '" checked onclick="select_by_year()">' + year;
+        $('#years').append(inputButton);
+    });
+}
+
 var select_by_year = function(){
 
-    var year = document.querySelector('input[name="mychart"]:checked').value;
+    var year = document.querySelector('input[name="year"]:checked').value;
 
     var filtered_data_by_year = data.filter(function(item){
         return item.year == year;
