@@ -1,5 +1,4 @@
 var sections = [];
-var years = new Set();
 var data = [];
 var title = 'Economic Activity per Gender';
 var chart;
@@ -39,16 +38,18 @@ $(document).ready(function(){
             sections.push(metadadosCnaeSections[k][['name_' + lang]]);
         }
 
-        data.forEach(function(item, index){
-            years.add(item.year);
-        });
-
         createYearsButtons();
         load_viz();
     })
 });
 
 var createYearsButtons = function(){
+    var years = new Set();
+
+    data.forEach(function(item, index){
+        years.add(item.year);
+    });
+
     years = Array.from(years);
     years.sort();
     years.forEach(function(year, index){
