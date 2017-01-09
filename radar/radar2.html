@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="../scripts/d3.js"></script>
+		<script type="text/javascript" src="../scripts/d3plus.js"></script>
+		<script type="text/javascript" src="../scripts/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="../scripts/async.js"></script>
+		<style type="text/css">
+			.d3plus_radial > path[fill="#282F6B"],
+			.d3plus_radial > path[fill="#b22200"] {
+				fill: rgba(255,255,255,.0) !important;
+				fill-opacity: 0 !important;
+				stroke-width: 2 !important;
+			}
+			.d3plus_radial > path[fill="#282F6B"]:hover,
+			.d3plus_radial > path[fill="#b22200"]:hover {
+				fill-opacity: .5 !important;
+			}
+			.d3plus_radial > path[fill="#282F6B"]:hover {
+				fill: rgba(40,47,107,1) !important;
+			}
+			.d3plus_radial > path[fill="#b22200"]:hover {
+				fill: rgba(178,34,0,1) !important;
+			}
+			.text.d3plus_radar_labels {
+				font-size: 11px;
+				transition: none !important
+			}
+			.d3plus_title.title > text{
+				font-family: "HelveticaNeue-Light", sans-serif;
+				fill: rgb(68, 68, 68);
+				text-decoration: none;
+				text-transform: none;
+				font-size: 22px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="viz"></div>
+
+		<script>
+
+		$(document).ready(function(){
+			var sample_data = [
+				{"name": "female", "year": "2000", "skill": "Administração pública", "value": 4},
+				{"name": "female", "year": "2000", "skill": "Serviços especializados", "value": 8},
+				{"name": "female", "year": "2000", "skill": "Alojamento e alimentação", "value": 2},
+				{"name": "female", "year": "2000", "skill": "Saneamento básico", "value": 2},
+				{"name": "female", "year": "2000", "skill": "Outros Serviços", "value": 2},
+				{"name": "female", "year": "2000", "skill": "Artes, Cultura e Recreação", "value": 4},
+				{"name": "female", "year": "2001", "skill": "Administração pública", "value": 2},
+				{"name": "female", "year": "2001", "skill": "Serviços especializados", "value": 3},
+				{"name": "female", "year": "2001", "skill": "Alojamento e alimentação", "value": 5},
+				{"name": "female", "year": "2001", "skill": "Saneamento básico", "value": 2},
+				{"name": "female", "year": "2001", "skill": "Outros Serviços", "value": 1},
+				{"name": "female", "year": "2001", "skill": "Artes, Cultura e Recreação", "value": 7},
+				{"name": "male", "year": "2000", "skill": "Administração pública", "value": 5},
+				{"name": "male", "year": "2000", "skill": "Serviços especializados", "value": 4},
+				{"name": "male", "year": "2000", "skill": "Alojamento e alimentação", "value": 6},
+				{"name": "male", "year": "2000", "skill": "Saneamento básico", "value": 0},
+				{"name": "male", "year": "2000", "skill": "Outros Serviços", "value": 0},
+				{"name": "male", "year": "2000", "skill": "Artes, Cultura e Recreação", "value": 5},
+				{"name": "male", "year": "2001", "skill": "Administração pública", "value": 2},
+				{"name": "male", "year": "2001", "skill": "Serviços especializados", "value": 3},
+				{"name": "male", "year": "2001", "skill": "Alojamento e alimentação", "value": 6},
+				{"name": "male", "year": "2001", "skill": "Saneamento básico", "value": 1},
+				{"name": "male", "year": "2001", "skill": "Outros Serviços", "value": 1},
+				{"name": "male", "year": "2001", "skill": "Artes, Cultura e Recreação", "value": 4}
+
+			];
+
+		  var visualization = d3plus.viz()
+		    .container("#viz")
+		    .data(sample_data)
+		    .id(["name", "skill"])
+		    .size("value")
+		    .type("radar")
+		    .time({
+		    	"value": "year",
+		    	"solo": 2000
+		    })
+
+		    // Ao desenhar um gráfico com título, é passado por padrão um valor para o elemento #d3plus_viz (linhas + legendas) se mover para o título caber
+		    // Os outros elementos (círculos), porém, não recebem este valor, deixando o gráfico desalinhado, por padrão.
+		    // Acredito que esse seja um erro do próprio d3 plus. Tentei ajustar mas após falhar várias vezes, optei por omitir o título.
+
+			// .title("Atividades Econômicas por gênero")
+
+		    .draw( rotateLegend() );
+		    	
+	    	// Criei a função rotateLegend pra ajustar o giro da legenda
+	    	// Consegui chamála no .draw(), mas não no .time().
+	    	// Assim, o giro se perde quando se muda de ano. =[]
+
+		    function rotateLegend() {
+
+		    	setTimeout(function(){  
+
+			 	 $.each($("#radar").find("text"), function(i,j) {
+						$(j).attr({
+							"transform": "translate(" + $(j).offset().left + "," + $(j).offset().top + ")",
+							"y": "",
+							"x": "",
+							// "text-anchor": "middle"
+						});
+						$(j).find("tspan").attr("x", "0");
+
+					});
+					$(".d3plus_radar_label_group").attr("transform", "");
+
+				}, 500);
+		    }
+		});
+		</script>
+	</body>
+</html>
