@@ -3,21 +3,24 @@ var years = new Set();
 var data = [];
 var title = 'Economic Activity per Gender';
 var chart;
+var lang = 'en';
 
 $(document).ready(function(){
     ajaxQueue([
         "http://api.staging.dataviva.info/rais/year/gender/cnae_section",
-        "http://api.staging.dataviva.info/metadata/cnae_sections"
+        "http://api.staging.dataviva.info/metadata/cnae_sections",
+        "http://api.staging.dataviva.info/metadata/genders",
     ], 
 
     function(responses){
-        var metadados = responses[0];
-        var api = responses[1];
+        var api = responses[0];
+        var metadadosCnaeSections = responses[1];
+        var metadadosGenders = responses[2];
 
         api.data.forEach(function(item, index){
             data.push({
                 "year": item[0],
-                "gender": item[1] == "1" ? "Male" : "Female",
+                "gender": item[1],
                 "cnae_section": item[2],
                 "average_monthly_wage": +item[5],
                 "jobs": item[6]
@@ -25,12 +28,15 @@ $(document).ready(function(){
         });
 
         data.map(function(item){
-            item.name = metadados[item.cnae_section].name_pt;
+            item.name = metadadosCnaeSections[item.cnae_section]['name_' + lang];
         });
 
+        data.map(function(item){
+            item.gender = metadadosGenders[item.gender]['name_' + lang];
+        });
         
-        for(var k in metadados){
-            sections.push(metadados[k].name_pt);
+        for(var k in metadadosCnaeSections){
+            sections.push(metadadosCnaeSections[k][['name_' + lang]]);
         }
 
         data.forEach(function(item, index){
@@ -46,52 +52,61 @@ var createYearsButtons = function(){
     years = Array.from(years);
     years.sort();
     years.forEach(function(year, index){
-        var inputButton = '<input type="radio" name="year" value="' + year + '" checked onclick="select_by_year()">' + year;
+        var inputButton = '<input type="radio" name="year" value="' + year + '" checked>' + year;
         $('#years').append(inputButton);
     });
+
+    $('[name=year]').click(filterByYear);
 }
 
-var select_by_year = function(){
+var filterByYear = function(){
 
-    var year = document.querySelector('input[name="year"]:checked').value;
+    var selectedYear = document.querySelector('input[name="year"]:checked').value;
 
-    var filtered_data_by_year = data.filter(function(item){
-        return item.year == year;
-    })
+    var dataFilteredByYear = data.filter(function(item){
+        return item.year == selectedYear;
+    });
 
-    var male_data = filtered_data_by_year.filter(function(item){
+    var dataFilteredByGenderMale = dataFilteredByYear.filter(function(item){
         return item.gender == 'Male';
-    })
+    });
 
-    var female_data = filtered_data_by_year.filter(function(item){
+    var dataFilteredByGenderFemale = dataFilteredByYear.filter(function(item){
         return item.gender == 'Female';
-    })
+    });
 
-    var male_series = [];
-    var female_series = [];
+    var maleSeries = [];
+    var femaleSeries = [];
 
     sections.forEach(function(section, index, array){
-
-        var males_by_section = male_data.filter(function(item){
+        var males_by_section = dataFilteredByGenderMale.filter(function(item){
             return item.name == section;
         });
 
-        var females_by_section = female_data.filter(function(item){
+        var females_by_section = dataFilteredByGenderFemale.filter(function(item){
             return item.name == section;
         });
 
         males_by_section = males_by_section.length ? males_by_section[0] : {jobs: 0};
         females_by_section = females_by_section.length ? females_by_section[0] : {jobs: 0};
 
-        male_series.push(males_by_section.jobs);
-        female_series.push(females_by_section.jobs);
+        maleSeries.push(males_by_section.jobs);
+        femaleSeries.push(females_by_section.jobs);
     });
 
-    chart.series[0].setData(male_series);
-    chart.series[1].setData(female_series);
+    chart.series[0].setData(maleSeries);
+    chart.series[1].setData(femaleSeries);
 }
 
 var load_viz = function(){
+
+    Highcharts.theme = {
+        colors: ['#3F51B5', '#F34336'],
+        chart: {
+            marginTop: 60
+        }
+    }
+    Highcharts.setOptions(Highcharts.theme);
 
     chart = Highcharts.chart('container', {
         chart: {
@@ -100,22 +115,13 @@ var load_viz = function(){
         },
 
         title: {
-            text: title,
-            x: -80
+            text: title
         },
 
         pane: {
             size: '80%'
         },
 
-        rangeSelector: {
-                button: [{
-                    type: 'year',
-                    count: 1,
-                    text: '1y'
-                }],
-            selected: 3
-        },
         xAxis: {
             categories: sections,
             tickmarkPlacement: 'on',
@@ -134,10 +140,16 @@ var load_viz = function(){
         },
 
         legend: {
-            align: 'right',
-            verticalAlign: 'top',
-            y: 70,
-            layout: 'vertical'
+            align: 'center',
+            verticalAlign: 'bottom'
+        },
+
+        plotOptions: {
+            series: {
+                marker: {
+                    enabled: false
+                }
+            }
         },
 
         series: [{
@@ -151,8 +163,5 @@ var load_viz = function(){
         }]
     });
 
-    select_by_year();
+    filterByYear();
 }
-
-
-
