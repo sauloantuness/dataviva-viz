@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="../scripts/d3.js"></script>
+		<script type="text/javascript" src="../scripts/d3plus.js"></script>
+		<script type="text/javascript" src="../scripts/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="../scripts/async.js"></script>
+		<style type="text/css">
+			.d3plus_tooltip {
+				color: rgb(68, 68, 68);
+				font-family: "Helvetica Neue";
+				font-weight: 200;
+				font-size: 12px;
+				box-shadow: rgba(0, 0, 0, 0.247059) 0px 1px 3px;
+				position: absolute;
+				z-index: 2000;
+				pointer-events: none;
+
+				/* O VALORES ABAIXO DEVEM SER SUBSTITUÍDOS NA FUNÇÃO */
+				top: 109px;
+				left: 534.5px;
+				/**/
+			}
+			.d3plus_tooltip_container {
+				background-color: rgb(255, 255, 255);
+				padding: 6px;
+				width: 211px;
+			}
+			.d3plus_tooltip_header {
+				position: relative;
+				z-index: 1;
+			}
+			.d3plus_tooltip_title {
+				max-width: 219px;
+				vertical-align: top;
+				width: 195px;
+				display: inline-block;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				word-wrap: break-word;
+				z-index: 1;
+				font-size: 16px;
+				line-height: 17px;
+				padding: 3px;
+				/* Esta cor varia de acordo com o gênero (female/male) */
+					/*female*/
+					color: rgb(178, 24, 0);
+					/*male*/
+					color: rgb(40, 47, 107);
+				/**/
+			}
+			.d3plus_tooltip_data_title {
+				font-size: 12px;
+				font-weight: bold;
+				padding: 6px 3px 0px;
+			}
+			.d3plus_tooltip_data_container {
+				overflow-y: auto;
+				z-index: -1;
+				max-height: 137px;
+			}
+			.d3plus_tooltip_data_block {
+				font-size: 12px;
+				padding: 3px 6px;
+				position: relative;
+
+				/* Esta cor varia de acordo com a atividade economica */
+					/* cinza neutro */
+					color: rgba(0, 0, 0,.7);
+				/**/
+			}
+			.d3plus_tooltip_data_name {
+				display: inline-block;
+				width: 155.641px;
+				min-height: 15px;
+			}
+			.d3plus_tooltip_data_value,
+			.d3plus_tooltip_footer {
+				display: block;
+				position: absolute;
+				text-align: right;
+				top: 3px;
+				right: 6px;
+				width: 13.3594px;
+			} 
+			.d3plus_tooltip_arrow {
+				font-size: 10px;
+				position: relative;
+				text-align: center;
+			}
+			.d3plus_tooltip_data_seperator {
+				background-color: rgb(221, 221, 221);
+				display: block;
+				height: 1px;
+				margin: 0px 3px;
+			}
+
+
+		</style>
+	</head>
+
+	<body style="position: relative;">
+		<div id="viz"></div>
+
+
+		<div id="d3plus_tooltip_id_radar" class="d3plus_tooltip d3plus_tooltip_small" style="">
+			<div class="d3plus_tooltip_container" style="">
+				<div class="d3plus_tooltip_header">
+					<div class="d3plus_tooltip_title">Male</div>
+				</div>
+				<div class="d3plus_tooltip_data_container">
+					<div class="d3plus_tooltip_data_block">
+						<div class="d3plus_tooltip_data_name">Value</div>
+						<div class="d3plus_tooltip_data_value">20</div>
+					</div>
+					<div class="d3plus_tooltip_data_title">Including</div>
+					<div class="d3plus_tooltip_data_block">
+						<div class="d3plus_tooltip_data_name">Alojamento E Alimentação</div>
+						<div class="d3plus_tooltip_data_value">6</div>
+					</div>
+					<div class="d3plus_tooltip_data_seperator"></div>
+					<div class="d3plus_tooltip_data_block">
+						<div class="d3plus_tooltip_data_name">Administração Pública</div>
+						<div class="d3plus_tooltip_data_value">5</div>
+					</div>
+					<div class="d3plus_tooltip_data_seperator"></div>
+					<div class="d3plus_tooltip_data_block">
+						<div class="d3plus_tooltip_data_name">Artes, Cultura E Recreação</div>
+						<div class="d3plus_tooltip_data_value">5</div>
+					</div>
+					<div class="d3plus_tooltip_data_seperator"></div>
+					<div class="d3plus_tooltip_data_block">
+						<div class="d3plus_tooltip_data_name">3 more</div>
+						<div class="d3plus_tooltip_data_value"></div>
+					</div>
+				</div>
+				<div class="d3plus_tooltip_footer"></div>
+			</div>
+			<div class="d3plus_tooltip_arrow"></div>
+		</div>
+
+	</body>
+</html>
+
+
+	
